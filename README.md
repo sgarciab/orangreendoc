@@ -1,6 +1,6 @@
 # Empezando
 
-Aquí se puede empezar la integración de los microservicios de Orangreen Insurances&Solutions
+Aquí se puede empezar la integración de los web services de Orangreen Insurances&Solutions
 
 # Prueba nuestros servicios
 
