@@ -63,3 +63,65 @@ Este campo se utiliza particularmente para verificar la autenticidad del emisor.
 El campo `secretKey` es una llave secreta precompartida (Pre-Shared Key) entre las dos partes y en caso de no haber sido provista debe solicitarse al email juan.vallejo@ixion.com.ec.
 
 La url para notificar debe ser provista por el aliado.
+
+
+
+# UMA notificación 
+Hay 3 estados para las consultas médicas:
+* `PREASSIGN` : El usuario pide una consulta esperando aser atendido. 
+* `ATT` : El paciente “entra” a la consulta.
+* `DONE` : Se cierra la consulta.
+
+En el momento en el cual ocurre cada uno de estos posiblesestados, se genera un request a la siguiente URL: /api/appointment/uma/notification, con los siguientes datos.
+
+* PREASSIGN:
+  * dni (string): número de documento.
+  * request_date (string): fecha_hora del pedido de atención.
+  * status (string): estado de consulta (PREASSIGN)
+
+* ATT:
+  * dni (string): número de documento.
+  * att_date (string): fecha_hora del comienzo de la atención.
+  * status (string): estado de consulta (PREASSIGN)
+
+* DONE:
+  * dni (string): número de documento.
+  * dt_cierre (string): fecha_hora del fin de la atención.
+  * destino_final (string): 
+  * diagnostico (string): diagnóstico de la atención médica.
+  * status (string): estado de consulta (DONE).
+
+El método que se utiliza es POST con el siguiente contenido.
+
+```json 
+//POST
+{    
+  "dni": "00000000",    
+  "dt_cierre": "2020-10-20 17:06:18",     
+  "destino_final": "En domicilio con monitoreo",    
+  "diagnostico": "INESP Confirmado COVID19 x epidemiol",    
+  "status": "DONE",
+  "signature": "e4f226c99d11914249ec29879c7ad2279f72fbcc20a5a41eec8b771878ff0b18"
+}
+``` 
+El campo `signature` se refiere a una firma hash con el algoritmo SHA-256 ([Secure Hash Algorithm 256](http://www.iwar.org.uk/comsec/resources/cipher/sha256-384-512.pdf)) cuyo contenido es el cuerpo de la petición como se muestra a continuación:
+
+```pseudocódigo
+var signature = sha256(dni + Separator + notificationKey + Separator + status + Separator + diagnostico)
+```
+
+Donde `Separator` equivale a `^|^` y el campo `notificationKey` se refiero a un PSK, que es una pre-shared key( clave previamente compartida) la cual se realiza internamente por correo.
+
+Se puede ver una implementacion 
+
+```C#
+var bodyHashing = Identification + Separator + notificationKey + Separator + Status + Separator + Diagnostico;
+var crypt = new System.Security.Cryptography.SHA256Managed();
+var hash = new System.Text.StringBuilder();
+byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(bodyHashing));
+foreach (byte theByte in crypto)
+{
+    hash.Append(theByte.ToString("x2"));
+}
+return hash.ToString();
+```
