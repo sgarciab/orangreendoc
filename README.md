@@ -112,16 +112,16 @@ var signature = sha256(dni + Separator + notificationKey + Separator + status + 
 
 Donde `Separator` equivale a `^|^` y el campo `notificationKey` se refiero a un PSK, que es una pre-shared key( clave previamente compartida) la cual se realiza internamente por correo.
 
-Se puede ver una implementacion 
+Se puede ver una implementacion en C#
 
 ```C#
-var bodyHashing = Identification + Separator + notificationKey + Separator + Status + Separator + Diagnostico;
-var crypt = new System.Security.Cryptography.SHA256Managed();
-var hash = new System.Text.StringBuilder();
-byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(bodyHashing));
-foreach (byte theByte in crypto)
-{
-    hash.Append(theByte.ToString("x2"));
-}
-return hash.ToString();
+  var bodyHashing = Identification + Separator + notificationKey + Separator + Status + Separator + Diagnostico;
+  var crypt = new System.Security.Cryptography.SHA256Managed();
+  var hash = new System.Text.StringBuilder();
+  byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(bodyHashing));
+  foreach (byte theByte in crypto)
+  {
+      hash.Append(theByte.ToString("x2"));
+  }
+  return hash.ToString();
 ```
