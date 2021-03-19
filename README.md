@@ -12,10 +12,21 @@ Nuestros servicios web están implementados con Swagger y pueden encontrarse aqu
 
 [Especificación de API](https://develop.orangreen.com.co/v2/api-docs)
 
+
+
 # Creación de Usuario
 
 Para crear un usuario es necesario que se utilice el endpoint de registrar
 [Crear Cuenta](https://develop.orangreen.com.co/swagger-ui/#/Users/registerUsingPOST)
+
+
+
+# Cotización SOAT Colombia
+## Cotización por placa
+La cotización de placa es un endpoint libre dentro OranGreen. Para poder consultarlo y probarlo visite este url [Cotización](https://develop.orangreen.com.co/swagger-ui/#/Lead/postLeadPlateDataUsingPOST).
+
+La cotización va a responder con datos devueltos por AXA Colpatria junto con los datos del Vehículo. 
+
 
 
 # Proceso de Pago
