@@ -27,6 +27,45 @@ La cotización de placa es un endpoint libre dentro OranGreen. Para poder consul
 
 La cotización va a responder con datos devueltos por AXA Colpatria junto con los datos del Vehículo. 
 
+# Proceso de Pago SOAT
+## Servicios Web Rest
+El proceso de Pago SOAT se encuentra habilitado solo para nuestros canales aliados que venden nuestros productos Orangreen y para poder realizar las siguientes acciones, el usuario debe tener permisos específicos.
+Estos permisos pueden ser solicitados a travez del envío de un correo a juan.vallejo@ixion.com.ec con el asunto "Permisos de Botón de Pago".
+
+Una vez contando con los permisos necesarios, ya se podrán las siguientes acciones que consta consta de 3 pasos:
+
+1. Login: para poder acceder a los servicios web es necesario tener un access token. Este se puede obtener haciendo login hacia el endpoint de login. El endpoint se puede ver en el siguiente enlace: [Login](https://develop.orangreen.com.co/swagger-ui/#/Contracts/postCreateContractUsingPOST)
+
+2. Creacion de contrato: La creación de contrato es necesaria para nosotros poder tener un registro en nuestro sistema de algunos parámetros necesarios como vigencia, tipo de contrato, etc. El endpoint se puede ver en el siguiente enlace: [Crear Contrato](https://develop.orangreen.com.co/swagger-ui/#/Contracts/postCreateContractCustomUsingPOST)
+
+3. Creación de transacción: La creación de transaccion nos permite saber los montos, a que contrato pertenece la transacción. Notificar a el aliado que el SOAT fue Emitido.  El endpoint se puede ver en el siguiente enlace: [Crear Transacción](https://develop.orangreen.com.co/swagger-ui/#/Transactions/requestPaymentCustomUsingPOST)
+## Webhook
+Cada vez que nosotros recibimos la notificación del aliado del nuevo estado de la transacción, ya sea pagada, rechazado o procesando. Nosotros vamos a notificar a nuestro aliado el estado de la emisión del SOAT. Hay 5 estados que se puede recibir:
+* `ACTIVE`: La emisión del soat fue activada desde el procesador de pagos.
+* `PENDING`: La emisión del soat todavía se encuentra en estado pendiente.
+* `VOIDED`: La emisión del soat fue anulada desde nuestra plataforma por algún requerimiento.
+
+El cuerpo de la transacción es de la siguiente manera 
+```json
+//POST
+{    
+    "contractId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", //UUID
+    "status": "string", //CREATED, PAID, CANCELLED, PENDING, VOIDED    
+    "amount":"double",
+    "signature": "string" // SHA1
+}
+```
+
+El campo `signature` se refiere a una firma hash con el algoritmo SHA-1 ([Secure Hash Algorithm 1](https://www.w3.org/PICS/DSig/SHA1_1_0.html)) cuyo contenido es el cuerpo de la petición como se muestra a continuación:
+```javascript
+var signature = sha1(contractId + status + amount +secretKey)
+```
+Este campo se utiliza particularmente para verificar la autenticidad del emisor.
+
+El campo `secretKey` es una llave secreta precompartida (Pre-Shared Key) entre las dos partes y en caso de no haber sido provista debe solicitarse al email juan.vallejo@ixion.com.ec.
+
+La url para notificar debe ser provista por el aliado.
+
 
 
 # Proceso de Pago
