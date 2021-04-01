@@ -38,8 +38,7 @@ Una vez contando con los permisos necesarios, ya se podrán las siguientes accio
 
 2. Creacion de contrato: La creación de contrato es necesaria para nosotros poder tener un registro en nuestro sistema de algunos parámetros necesarios como vigencia, tipo de contrato, etc. El endpoint se puede ver en el siguiente enlace: [Crear Contrato](https://develop.orangreen.com.co/swagger-ui/#/Contracts/postCreateContractCustomUsingPOST)
 
-3. Creación de transacción: La creación de transaccion nos permite saber los montos, contrato y el estado de la transacción. Los estados disponibles para que nos puedan informar son los siguiente:`PAID`,`CANCELLED`,`REJECTED`. Una vez que el estado es  `PAID` se procede a emitir el SOAT en COLPATRIA.  
-El endpoint se puede ver en el siguiente enlace: [Crear Transacción](https://develop.orangreen.com.co/swagger-ui/#/Transactions/requestPaymentCustomUsingPOST)
+3. Creación de transacción: La creación de transaccion nos permite saber los montos, contrato y el estado de la transacción. Los estados disponibles para que nos puedan informar son los siguiente:`PAID`,`CANCELLED`,`REJECTED`. Una vez que el estado es  `PAID` se procede a emitir el SOAT en COLPATRIA. El endpoint se puede ver en el siguiente enlace: [Crear Transacción](https://develop.orangreen.com.co/swagger-ui/#/Transactions/requestPaymentCustomUsingPOST)
 ## Webhook
 Cada vez que nosotros recibimos la notificación del aliado del nuevo estado de la transacción, ya sea pagada, rechazado o procesando. Nosotros vamos a notificar a nuestro aliado el estado de la emisión del SOAT. Hay 3 estados que se puede recibir:
 * `ACTIVE`: La emisión del soat fue activada desde el procesador de pagos.
