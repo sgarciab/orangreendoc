@@ -27,10 +27,10 @@ La cotización de placa es un endpoint libre dentro OranGreen. Para poder consul
 
 La cotización va a responder con datos devueltos por AXA Colpatria junto con los datos del Vehículo. 
 
-# Proceso de Pago SOAT
+# Proceso de Pago SOAT No Controlado
 ## Servicios Web Rest
-El proceso de Pago SOAT se encuentra habilitado solo para nuestros canales aliados que venden nuestros productos Orangreen y para poder realizar las siguientes acciones, el usuario debe tener permisos específicos.
-Estos permisos pueden ser solicitados a travez del envío de un correo a juan.vallejo@ixion.com.ec con el asunto "Permisos de Botón de Pago".
+El proceso de Pago SOAT se encuentra habilitado solo para nuestros canales aliados que venden nuestros productos Orangreen, este servicio no controlado tiene el objetivo de que el aliado controla la recaudación e informa a través de nuestros APIs una vez que ha sido pagado. En este proceso no interviene nuestro botón de pagos PlacetoPay. Para poder realizar las siguientes acciones, el usuario debe tener permisos específicos.
+Estos permisos pueden ser solicitados a través del envío de un correo a juan.vallejo@ixion.com.ec con el asunto "Permisos de proceso de Pago No Controlado".
 
 Una vez contando con los permisos necesarios, ya se podrán las siguientes acciones que consta consta de 3 pasos:
 
@@ -38,9 +38,10 @@ Una vez contando con los permisos necesarios, ya se podrán las siguientes accio
 
 2. Creacion de contrato: La creación de contrato es necesaria para nosotros poder tener un registro en nuestro sistema de algunos parámetros necesarios como vigencia, tipo de contrato, etc. El endpoint se puede ver en el siguiente enlace: [Crear Contrato](https://develop.orangreen.com.co/swagger-ui/#/Contracts/postCreateContractCustomUsingPOST)
 
-3. Creación de transacción: La creación de transaccion nos permite saber los montos, a que contrato pertenece la transacción. Notificar a el aliado que el SOAT fue Emitido.  El endpoint se puede ver en el siguiente enlace: [Crear Transacción](https://develop.orangreen.com.co/swagger-ui/#/Transactions/requestPaymentCustomUsingPOST)
+3. Creación de transacción: La creación de transaccion nos permite saber los montos, contrato y el estado de la transacción. Los estados disponibles para que nos puedan informar son los siguiente:`PAID`,`CANCELLED`,`REJECTED`. Una vez que el estado es  `PAID` se procede a  
+emitir el SOAT en COLPATRIA.  El endpoint se puede ver en el siguiente enlace: [Crear Transacción](https://develop.orangreen.com.co/swagger-ui/#/Transactions/requestPaymentCustomUsingPOST)
 ## Webhook
-Cada vez que nosotros recibimos la notificación del aliado del nuevo estado de la transacción, ya sea pagada, rechazado o procesando. Nosotros vamos a notificar a nuestro aliado el estado de la emisión del SOAT. Hay 5 estados que se puede recibir:
+Cada vez que nosotros recibimos la notificación del aliado del nuevo estado de la transacción, ya sea pagada, rechazado o procesando. Nosotros vamos a notificar a nuestro aliado el estado de la emisión del SOAT. Hay 3 estados que se puede recibir:
 * `ACTIVE`: La emisión del soat fue activada desde el procesador de pagos.
 * `PENDING`: La emisión del soat todavía se encuentra en estado pendiente.
 * `VOIDED`: La emisión del soat fue anulada desde nuestra plataforma por algún requerimiento.
@@ -50,7 +51,7 @@ El cuerpo de la transacción es de la siguiente manera
 //POST
 {    
     "contractId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", //UUID
-    "status": "string", //CREATED, PAID, CANCELLED, PENDING, VOIDED    
+    "status": "string", //ACTIVE,PENDING, VOIDED    
     "amount":"double",
     "signature": "string" // SHA1
 }
@@ -72,7 +73,7 @@ La url para notificar debe ser provista por el aliado.
 
 ## Servicios Web Rest
 El proceso de Pago se encuentra habilitado solo para nuestros canales aliados que venden nuestros productos Orangreen y para poder realizar las siguientes acciones, el usuario debe tener permisos específicos.
-Estos permisos pueden ser solicitados a travez del envío de un correo a juan.vallejo@ixion.com.ec con el asunto "Permisos de Botón de Pago".
+Estos permisos pueden ser solicitados a través del envío de un correo a juan.vallejo@ixion.com.ec con el asunto "Permisos de Botón de Pago".
 
 Una vez contando con los permisos necesarios, ya se podrán las siguientes acciones que consta consta de 3 pasos:
 
