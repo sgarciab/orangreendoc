@@ -148,6 +148,7 @@ El método que se utiliza es POST con el siguiente contenido.
 {    
   "dni": "00000000",    
   "dt_cierre": "2020-10-20 17:06:18",     
+  "incidente_id": "2020-11-25_08-54-46-110992", 
   "destino_final": "En domicilio con monitoreo",    
   "diagnostico": "INESP Confirmado COVID19 x epidemiol",    
   "status": "DONE",
@@ -157,7 +158,7 @@ El método que se utiliza es POST con el siguiente contenido.
 El campo `signature` se refiere a una firma hash con el algoritmo SHA-256 ([Secure Hash Algorithm 256](http://www.iwar.org.uk/comsec/resources/cipher/sha256-384-512.pdf)) cuyo contenido es el cuerpo de la petición como se muestra a continuación:
 
 ```pseudocódigo
-var signature = sha256(dni + Separator + notificationKey + Separator + status + Separator + diagnostico)
+var signature = sha256(dni + Separator + notificationKey + Separator + status + Separator + destino_final + Separator + incidente_id)
 ```
 
 Donde `Separator` equivale a `^|^` y el campo `notificationKey` se refiero a un PSK, que es una pre-shared key( clave previamente compartida) la cual se realiza internamente por correo.
