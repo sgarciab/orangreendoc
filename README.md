@@ -126,16 +126,19 @@ En el momento en el cual ocurre cada uno de estos posiblesestados, se genera un 
 
 * PREASSIGN:
   * dni (string): número de documento.
+  * incidente_id: identificador de la consulta.
   * request_date (string): fecha_hora del pedido de atención.
   * status (string): estado de consulta (PREASSIGN)
 
 * ATT:
   * dni (string): número de documento.
+  * incidente_id: identificador de la consulta.
   * att_date (string): fecha_hora del comienzo de la atención.
   * status (string): estado de consulta (PREASSIGN)
 
 * DONE:
   * dni (string): número de documento.
+  * incidente_id: identificador de la consulta.
   * dt_cierre (string): fecha_hora del fin de la atención.
   * destino_final (string): 
   * diagnostico (string): diagnóstico de la atención médica.
