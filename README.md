@@ -118,7 +118,7 @@ La url para notificar debe ser provista por el aliado.
 
 # UMA notificación 
 Hay 3 estados para las consultas médicas:
-* `PREASSIGN` : El usuario pide una consulta esperando aser atendido. 
+* `PREASSIGN` : El usuario pide una consulta esperando ser atendido. 
 * `ATT` : El paciente “entra” a la consulta.
 * `DONE` : Se cierra la consulta.
 
@@ -179,3 +179,21 @@ Se puede ver una implementacion en C#
   }
   return hash.ToString();
 ```
+# Citas VALE
+1. Register :para crear un usuario es necesario que se utilice el endpoint de registrar: [Crear Cuenta](https://develop.orangreen.com.co/swagger-ui/#/Users/registerUsingPOST)
+
+2. Login: para poder acceder a los servicios web es necesario tener un access token. Este se puede obtener haciendo login hacia el endpoint de login. El endpoint se puede ver en el siguiente enlace: [Login](https://develop.orangreen.com.co/swagger-ui/#/Users/loginUsingPOST)
+
+3. Obtener Planes Activos: Para obtener los planes activos de un cliene es necesario que se utilice el endpoint:[Obtener Productos](https://develop.orangreen.com.co/swagger-ui/#/Contracts/getProductContractUsingGET)
+
+4. Creacion de cita: La creación de cita es necesaria para nosotros poder tener un registro en nuestro sistema de algunos parámetros necesarios como tipo de contacto,tipo de relación , tipo de cita, email, teléfono, etc. El endpoint se puede ver en el siguiente enlace: [Crear Cita](https://develop.orangreen.com.co/swagger-ui/#/Appointment/createAppointmentUsingPOST)
+Hay 2 estados para tipo de contacto:
+* `CALL` : El usuario pide ser llamado para obtener su cita. 
+* `WHATSAPP` : El usuario pide ser contactado por whatsapp para obtener su cita.
+Hay 3 estados para tipo de cita:
+* `TELEMEDICINA` : cita tipo telemedicina. 
+* `MEDICINA_PRESENCIAL` : cita tipo presencial.
+* `ODONTOLOGIA` : cita tipo odontológica.
+Hay 1 estado para tipo de relación:
+* `OWNER` : titular. 
+
