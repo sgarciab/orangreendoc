@@ -187,13 +187,16 @@ Se puede ver una implementacion en C#
 3. Obtener Planes Activos: Para obtener los planes activos de un cliene es necesario que se utilice el endpoint:[Obtener Productos](https://develop.orangreen.com.co/swagger-ui/#/Contracts/getProductContractUsingGET)
 
 4. Creacion de cita: La creación de cita es necesaria para nosotros poder tener un registro en nuestro sistema de algunos parámetros necesarios como tipo de contacto,tipo de relación , tipo de cita, email, teléfono, etc. El endpoint se puede ver en el siguiente enlace: [Crear Cita](https://develop.orangreen.com.co/swagger-ui/#/Appointment/createAppointmentUsingPOST)
+
 Hay 2 estados para tipo de contacto:
 * `CALL` : El usuario pide ser llamado para obtener su cita. 
 * `WHATSAPP` : El usuario pide ser contactado por whatsapp para obtener su cita.
+
 Hay 3 estados para tipo de cita:
 * `TELEMEDICINA` : cita tipo telemedicina. 
 * `MEDICINA_PRESENCIAL` : cita tipo presencial.
 * `ODONTOLOGIA` : cita tipo odontológica.
+
 Hay 1 estado para tipo de relación:
 * `OWNER` : titular. 
 
